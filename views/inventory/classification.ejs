@@ -1,0 +1,12 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- The message block, to be created in the next unit -->
+<%# messages() %>
+
+<!-- The inventory items display using the grid variable that contains HTML -->
+<%- grid %>

@@ -1,0 +1,9 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+} %>
+
+<!-- using HTML from the message variable to create a message on the errors page -->
+<%- message %>
