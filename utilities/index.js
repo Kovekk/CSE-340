@@ -57,6 +57,33 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the details view HTML
+* ************************************ */
+Util.buildDetailsGrid = async function(data) {
+  console.log(typeof data)
+  let grid
+  if (typeof data != "undefined") {
+  grid = `<div class="details">
+  <img src="${data.inv_image}" alt="${data.inv_color} ${data.inv_year} ${data.inv_make} ${data.inv_model}}">
+  <div class="price">
+  <p>$${new Intl.NumberFormat('en-US').format(data.inv_price)}</p>
+  <button>Buy Now</button>
+  </div>
+  <ul>
+  <li>Make: ${data.inv_make}</li>
+  <li>Model: ${data.inv_model}</li>
+  <li>Year: ${data.inv_year}</li>
+  <li>Mileage: ${new Intl.NumberFormat('en-US').format(data.inv_miles)}</li>
+  <li>Color: ${data.inv_color}</li>
+  </ul>
+  </div>`
+  } else {
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid // Buttons may be changed to an a tag later
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

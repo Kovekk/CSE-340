@@ -1,0 +1,9 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1 class="makeModel"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- The detailed item display using the grid variable that contains HTML -->
+<%- grid %>
