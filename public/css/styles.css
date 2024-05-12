@@ -89,9 +89,9 @@ h1, h2 {
   z-index: 999;
 }
 
-.hero {
+/* .hero {
   height: 250px;
-}
+} */
 
 .hero ul .first {
   font-weight: bold;
@@ -151,11 +151,75 @@ footer {
   font-size: 12px;
 }
 
-/******* Classification Styles **********/
+.copyright {
+  margin-bottom: 0.1em; 
+}
 
+/******* Classification Styles **********/
+ul#inv-display {
+  padding: 0;
+  list-style: none;
+}
+
+ul#inv-display li {
+  margin:  2em auto;
+  width: fit-content;
+  text-align: center;
+}
+
+ul#inv-display li h2 {
+  margin: 0;
+}
+
+ul#inv-display li hr {
+  margin-bottom: 0.2em;
+}
+
+ul#inv-display li a {
+  text-decoration: none;
+  color: #1D2921;
+  font-size: 17px;
+}
 
 /******* Details Styles *****************/
+  .details {
+    width: 95%;
+    margin: auto;
+  }
 
+  .details img {
+    max-width: 100%;
+    margin: auto;
+  }
+
+  .price {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.4em;
+    background-color: lightgray;
+    margin: 0.7em 0;
+  }
+
+  .price p {
+    margin: 0.2em;
+    height: fit-content;
+  }
+
+  .price button {
+    background-color: #1D2921;
+    color: white;
+    padding: 1em;
+    border: 0;
+    border-radius: 2px;
+  }
+
+  .details ul {
+    list-style: none;
+    padding: 0;
+    width: fit-content;
+    margin: auto;
+  }
 
 /******* Large Screen *******************/
 @media only screen and (min-width: 650px) {
@@ -178,6 +242,7 @@ footer {
 
   .hero {
     grid-column: 1/3;
+    height: 250px;
   }
 
   .hero ul {
@@ -224,4 +289,32 @@ footer {
     font-size: 32px;
   }
 
+  /******* Large Classification Styles ****/
+  ul#inv-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /******* Large Details Styles ***********/
+  .details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .details img {
+    max-width: 95%;
+    grid-row: 1/3;
+  }
+
+  .price {
+    margin: 0;
+  }
+
+  .price button {
+    padding: 0.5em 1em;
+  }
+
+  .details ul {
+    margin: 0.5em 1em;
+  }
 }
