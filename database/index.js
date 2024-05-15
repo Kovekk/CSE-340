@@ -25,6 +25,7 @@ module.exports = {
       return res
     } catch (error) {
       console.error("error in query", { text })
+      console.log(error.detail)
       throw error
     }
   },

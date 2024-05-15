@@ -1,0 +1,39 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1 class="classification"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- The message block -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<!-- CREATE THE LOGIN FORM -->
+<form action="/account/register" method="post" class="RegisterForm">
+    <label for="accountFirstname">
+        First name:
+        <input type="text" name="account_firstname" id="accountFirstname" required>
+    </label>
+    <label for="accountLastname">
+        Last name:
+        <input type="text" name="account_lastname" id="accountLastname" required>
+    </label>
+    <label for="accountEmail">
+        Email:
+        <input type="email" name="account_email" id="accountEmail" required>
+    </label>
+    <label for="accountPassword">
+        Password:
+        <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+        <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+    </label>
+    <input type="submit" name="submit" id="login" value="Register">
+</form>
