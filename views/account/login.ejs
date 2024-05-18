@@ -1,6 +1,6 @@
 <!-- Creating the heading using the title already provided when the page is loaded -->
 <% if (title) { %>
-    <h1 class="classification"><%= title %></h1>
+    <h1 class="login"><%= title %></h1>
     <% } else {
       res.redirect('/')
     } %>
@@ -8,11 +8,19 @@
 <!-- The message block -->
 <%- messages() %>
 
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
 <!-- CREATE THE LOGIN FORM -->
-<form class="loginForm">
-    <label>
+<form id="loginForm" action="/account/login" method="post">
+    <label for="email">
         Email:
-        <input type="email" name="email" required>
+        <input type="email" name="email" id="email" required value="<%= locals.account_email %>">
     </label>
     <label>
         Password:

@@ -221,6 +221,42 @@ ul#inv-display li a {
     margin: auto;
   }
 
+/******* Form Styles ********************/
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0.4em;
+}
+
+input, select, textarea {
+  padding: 0.5em 0.1em;
+  margin: 0.3em;
+}
+
+label span {
+  font-size: 14px;
+}
+
+#login, #newClassification, #newInventory {
+  width: 50%;
+  margin: 0.5em auto;
+  border: none;
+  background-color: #1D2921;
+  color: white;
+}
+
+ul.notice {
+  list-style: none;
+  padding: 0;
+  font-size: 13px;
+  margin: 0.5em;
+}
+
 /******* Large Screen *******************/
 @media only screen and (min-width: 650px) {
   body {
@@ -316,5 +352,14 @@ ul#inv-display li a {
 
   .details ul {
     margin: 0.5em 1em;
+  }
+
+  /******* Large Form Styles **************/
+  input, select {
+    width: 60%;
+  }
+
+  #login, #newClassification, #newInventory {
+    width: 30%;
   }
 }

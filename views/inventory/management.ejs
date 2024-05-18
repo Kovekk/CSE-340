@@ -1,0 +1,12 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1 class="login"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- The message block -->
+<%- messages() %>
+
+<a href="/inv/newClassification">Add New Classification</a>
+<a href="/inv/newInventory">Add New Inventory</a>

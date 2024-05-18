@@ -1,6 +1,6 @@
 <!-- Creating the heading using the title already provided when the page is loaded -->
 <% if (title) { %>
-    <h1 class="classification"><%= title %></h1>
+    <h1 class="register"><%= title %></h1>
     <% } else {
       res.redirect('/')
     } %>
@@ -20,15 +20,15 @@
 <form action="/account/register" method="post" class="RegisterForm">
     <label for="accountFirstname">
         First name:
-        <input type="text" name="account_firstname" id="accountFirstname" required>
+        <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
     </label>
     <label for="accountLastname">
         Last name:
-        <input type="text" name="account_lastname" id="accountLastname" required>
+        <input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>">
     </label>
     <label for="accountEmail">
         Email:
-        <input type="email" name="account_email" id="accountEmail" required>
+        <input type="email" name="account_email" id="accountEmail" required value="<%= locals.account_email %>">
     </label>
     <label for="accountPassword">
         Password:
