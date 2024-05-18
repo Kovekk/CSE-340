@@ -257,6 +257,19 @@ ul.notice {
   margin: 0.5em;
 }
 
+.management a {
+  text-decoration: none;
+  padding: 0.5em 0.5em;
+  border: none;
+  background-color: #1D2921;
+  color: white;
+}
+
+.management {
+  margin: auto;
+  width: fit-content;
+}
+
 /******* Large Screen *******************/
 @media only screen and (min-width: 650px) {
   body {
