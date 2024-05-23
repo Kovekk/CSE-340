@@ -242,7 +242,7 @@ label span {
   font-size: 14px;
 }
 
-#login, #newClassification, #newInventory {
+#login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword {
   width: 50%;
   margin: 0.5em auto;
   border: none;
@@ -268,6 +268,45 @@ ul.notice {
 .management {
   margin: auto;
   width: fit-content;
+}
+
+/******* Account Management *************/
+.accountManagement h2 {
+  font-size: 18px;
+}
+
+.accountManagement a {
+  text-decoration: none;
+  padding: 0.5em;
+  background-color: #1D2921;
+  color: white;
+}
+
+.accountManagement {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+}
+
+/******* Inventory Management ***********/
+table {
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #1D2921;
+  color: white;
+}
+
+td, th {
+  padding: 0.8em 1em;
+}
+
+td a {
+  text-decoration: none;
+  background-color: #6290C3;
+  color: black;
+  padding: 0.5em;
 }
 
 /******* Large Screen *******************/
@@ -372,7 +411,7 @@ ul.notice {
     width: 60%;
   }
 
-  #login, #newClassification, #newInventory {
+  #login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword {
     width: 30%;
   }
 }

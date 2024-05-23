@@ -25,4 +25,41 @@ async function checkExistingEmail(account_email){
   }
 }
 
-module.exports = {registerAccount, checkExistingEmail}
+/* *****************************
+* Return account data using email address
+* ***************************** */
+async function getAccountByEmail (account_email) {
+  try {
+    const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1"
+    const result = await pool.query(sql, [account_email])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching email found")
+  }
+}
+
+async function getAccountById (account_id)  {
+  return 1
+}
+
+async function updateAccount (account_firstname, account_lastname, account_email, account_id) {
+  try {
+    const sql = "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *" 
+    const update = await pool.query(sql, [account_firstname, account_lastname, account_email, account_id])
+    return update.rows[0]
+  } catch (error) {
+    console.error("account update error: " + error)
+  }
+}
+
+async function changePassword(account_password, account_id) {
+  try {
+    const sql = "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *"
+    const change = await pool.query(sql, [account_password, account_id])
+    return change.rows[0]
+  } catch (error) {
+    console.error("password change error: " + error)
+  }
+}
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, changePassword}

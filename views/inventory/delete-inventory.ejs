@@ -1,0 +1,40 @@
+<% if (title) { %>
+    <h1 class="login"><%= title %></h1>
+<% } else {
+      res.redirect('/')
+} %>
+
+<!-- The message block -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+  <form id="deleteForm" action="/inv/delete" method="post">
+    <label>
+        Make
+        <input type="text" name="inv_make" id="inv_make" required pattern="^(?=.*[a-zA-Z0-9])(?!.*\s)(?!.*[^a-zA-Z0-9]).{1,}$" value="<%= locals.inv_make %>" readonly>
+    </label>
+    <label>
+        Model
+        <input type="text" name="inv_model" id="inv_model" required pattern="^(?=.*[a-zA-Z0-9])(?!.*\s)(?!.*[^a-zA-Z0-9]).{1,}$" value="<%= locals.inv_model %>" readonly>
+    </label>
+    <label>
+        Year
+        <input type="number" name="inv_year" id="inv_year" required pattern="^(?=.*[0-9])(?!.*\s)(?!.*[^0-9]).{4}$" value="<%= locals.inv_year %>" readonly>
+    </label>
+    <label>
+        Price
+        <input type="number" name="inv_price" id="inv_price" required pattern="^(?=.*[0-9\.])(?!.*\s)(?!.*[^0-9\.]).{1,}$" value="<%= locals.inv_price %>" readonly>
+    </label>
+    <p>Please confirm deletion - deleting a vehicle is permanent</p>
+    <input type="submit" name="submit" id="editInventory" value="Delete Vehicle">
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+  </form>

@@ -1,0 +1,20 @@
+<!-- Creating the heading using the title already provided when the page is loaded -->
+<% if (title) { %>
+    <h1 class="login"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<!-- The message block -->
+<%- messages() %>
+
+<div class="accountManagement">
+  <h2>Welcome <%- accountName %></h2>
+  
+  <a href="/account/update">Update account information</a>
+  
+  <% if(accountType == "Employee" || accountType == "Admin") { %>
+    <h3>Inventory Management</h3>
+    <a href="/inv/">Click Here</a>
+  <% } %>
+</div>
