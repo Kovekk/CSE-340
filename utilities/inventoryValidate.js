@@ -198,4 +198,42 @@ validate.checkUpdateData = async (req, res, next) => {
     next()
 }
 
+validate.reviewRules = () => {
+  return [
+    body("review_text")
+    .trim()
+    .notEmpty()
+    .isLength({ min: 1 })
+    .withMessage("Please provide a review."),
+  ]
+}
+
+validate.checkReviewData = async (req, res, next) => {
+  const {review_text, review_id, makeModel} = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+        let accountName
+        if (req.cookies.jwt) {
+          accountName = res.locals.accountData.account_firstname
+        } else {
+          accountName = ""
+        }
+        const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+        res.render("inventory/edit-review", {
+            errors,
+            title: "Edit Review",
+            nav,
+            isLoggedIn,
+            review_id,
+            review_text,
+            makeModel,
+        })
+        return
+    }
+    next()
+  }
+
+
 module.exports = validate

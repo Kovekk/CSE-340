@@ -49,22 +49,20 @@ router.post(
 
 router.post(
   "/createReview",
-  // inventoryValidate.reviewRules(),
-  // inventoryValidate.checkReviewData,
+  inventoryValidate.reviewRules(),
+  inventoryValidate.checkReviewData,
   utilities.handleErrors(invController.createReview)
 )
 
 router.post(
   "/editReview",
-  // inventoryValidate.reviewRules(),
-  // inventoryValidate.checkReviewData,
+  inventoryValidate.reviewRules(),
+  inventoryValidate.checkReviewData,
   utilities.handleErrors(invController.editReview)
 )
 
 router.post(
   "/deleteReview",
-  // inventoryValidate.reviewRules(),
-  // inventoryValidate.checkReviewData,
   utilities.handleErrors(invController.deleteReview)
 )
 

@@ -438,7 +438,7 @@ invCont.buildEditReview = async function (req, res) {
 }
 
 invCont.editReview = async function (req, res) {
-  const {review_text, review_id} = req.body
+  const {review_text, review_id, makeModel} = req.body
 
   const updateResult = await inventory_model.editReview(review_text, review_id)
 
