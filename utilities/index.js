@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -30,7 +31,7 @@ Util.getNav = async function (req, res, next) {
  * Constructs the header tools section
  ************************** */
 Util.buildHeaderTools = async function (isLoggedIn, accountName) {
-  console.log(isLoggedIn)
+  // console.log(isLoggedIn)
   if (isLoggedIn) {
     let html = `<a title="Click to manage account" href="/account/">Hello ${accountName}</a>`
     html += '<a title="Click to logout" href="/account/logout">Logout</a>'
@@ -78,7 +79,7 @@ Util.buildClassificationGrid = async function(data){
 * Build the details view HTML
 * ************************************ */
 Util.buildDetailsGrid = async function(data) {
-  console.log(typeof data)
+  // console.log(typeof data)
   let grid
   if (typeof data != "undefined") {
   grid = `<div class="details">
@@ -174,6 +175,64 @@ Util.checkAccountType = (req, res, next) => {
     req.flash("notice", "Not an employee or admin")
     return res.redirect("/account/login")
   }
+}
+
+Util.buildReviews = async function(isLoggedIn, accountName, accountLastName, inv_id, account_id) {
+  const reviewData = await invModel.getReviewDataByInvId(inv_id) // CREATE A JOIN IN THE MODEL TO CONNECT THE ACCOUNT DATA FOR EACH REVIEW
+  const firstInitial = accountName.charAt(0)
+  let reviews = "<h2>Reviews</h2>"
+  reviews += "<ul class='detailReviews'>"
+  if (reviewData) {
+    reviewData.sort((a, b) => a.review_date - b.review_date);
+    reviewData.forEach(async function (review) {
+      // console.log(reviewData)
+      // const accountData = await accountModel.getAccountById(review.account_id)
+      reviews += '<li>'
+      const accountFirstInitial = review.account_firstname.charAt(0)
+      reviews += '<p>' + accountFirstInitial + ' ' + review.account_lastname + '</p>'
+      reviews += '<p>' + review.review_text + '</p>'
+      reviews += '</li>'
+      // console.log(accountFirstInitial)
+    })
+  } else {
+    console.log("***  NO REVIEW DATA FOR THIS PRODUCT ***")
+  }
+  
+  reviews += "</ul>"
+  if (isLoggedIn) {
+    reviews += '<form id="createReviewForm" action="/inv/createReview" method="post">'
+    reviews += '<label class="reviewScreenName">'
+    reviews += firstInitial + ' ' + accountLastName
+    reviews += '<textarea id=review_text name=review_text rows="6" cols="50" placeholder="Leave your review here.">'
+    reviews += '</textarea>'
+    reviews += '</label>'
+    reviews += '<input type="hidden" value="'+ inv_id +'" id="inv_id" name="inv_id">'
+    reviews += '<input type="hidden" value="'+ account_id +'" id="account_id" name="account_id">'
+    reviews += '<input type="submit" id="createReview" name="submit" value="Create Review">'
+    reviews += "</form>"
+  } else {
+    reviews += '<p>To leave a review, please <a href="/account/login">log in</a></p>'
+  }
+  return reviews
+}
+
+Util.buildReviewManagement = async function (accountId) {
+  const reviewData = await invModel.getReviewDataByAccountId(accountId)
+  let reviewManagement = '<h3>Manage Reviews</h3>'
+  if (reviewData) {
+    reviewManagement += '<ul class="ReviewManagement">'
+    reviewData.forEach(review => {
+      reviewManagement += '<li>'
+      reviewManagement += '<p class="vehicleReviewed">' + review.inv_make + ' ' + review.inv_model + '</p>'
+      reviewManagement += '<p>' + review.review_text + '</p>'
+      reviewManagement += '<div class="reviewEditDelete"><a href="/inv/editReview/' + review.review_id + '" class="reviewEdit">Edit</a>'
+      reviewManagement += '<a href="/inv/deleteReview/' + review.review_id + '"class="reviewDelete">Delete</a></div>'
+    })
+    reviewManagement += '<ul>'
+  } else {
+    console.log("No reviews for this account")
+  }
+  return reviewManagement
 }
 
 module.exports = Util

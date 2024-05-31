@@ -160,10 +160,12 @@ async function buildAccountManagement(req, res) {
   let accountName
   if (req.cookies.jwt) {
     accountName = res.locals.accountData.account_firstname
+    accountId = res.locals.accountData.account_id
   } else {
     accountName = ""
   }
   const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+  const reviewManagement = await utilities.buildReviewManagement(accountId)
   console.log(res.locals.accountData.account_firstname)
   res.render("account/accountManagement", {
     title: "Account Management",
@@ -172,6 +174,7 @@ async function buildAccountManagement(req, res) {
     errors: null,
     accountName: res.locals.accountData.account_firstname,
     accountType: res.locals.accountData.account_type,
+    reviewManagement,
   })
 }
 

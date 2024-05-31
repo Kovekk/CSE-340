@@ -1,0 +1,25 @@
+<% if (title) { %>
+    <h1 class="login"><%= title %></h1>
+<% } else {
+      res.redirect('/')
+} %>
+
+<!-- The message block -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+  <form id="deleteForm" action="/inv/deleteReview" method="post">
+    <label>
+        <%= locals.makeModel %>
+        <textarea id=review_text name=review_text rows="6" cols="50" disabled><%= locals.review_text %></textarea>
+    </label>
+    <input type="hidden" id="review_id" name="review_id" value="<%= locals.review_id %>">
+    <input type="submit" name="submit" id="deleteReview" value="Delete Review">
+  </form>

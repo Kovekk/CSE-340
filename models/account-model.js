@@ -39,7 +39,13 @@ async function getAccountByEmail (account_email) {
 }
 
 async function getAccountById (account_id)  {
-  return 1
+  try {
+    const sql = "SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_id = $1"
+    const result = await pool.query(sql, [account_id])
+    return result.rows[0]
+  } catch (error) {
+    return new Error("No matching id found")
+  }
 }
 
 async function updateAccount (account_firstname, account_lastname, account_email, account_id) {
@@ -62,4 +68,4 @@ async function changePassword(account_password, account_id) {
   }
 }
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, changePassword}
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateAccount, changePassword, getAccountById}

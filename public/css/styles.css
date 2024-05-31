@@ -242,7 +242,7 @@ label span {
   font-size: 14px;
 }
 
-#login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword {
+#login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword, #createReview, #editReview, #deleteReview {
   width: 50%;
   margin: 0.5em auto;
   border: none;
@@ -307,6 +307,52 @@ td a {
   background-color: #6290C3;
   color: black;
   padding: 0.5em;
+}
+
+/******* Reviews styles *****************/
+.detailReviews {
+  list-style: none;
+  padding: 0;
+  margin: 0.5em;
+}
+
+.detailReviews p {
+  margin: 0.2em;
+}
+
+.detailReviews li {
+  margin-bottom: 1em;
+  border-bottom: 1px solid gray;
+}
+
+.reviewScreenName {
+  font-weight: bold;
+}
+
+.reviewEdit, .reviewDelete {
+  text-decoration: none;
+  background-color: #6290C3;
+  color: black;
+  padding: 0.5em;
+  margin: 0 1em;
+  width: 64px;
+  display: inline-block;
+  text-align: center;
+}
+
+.ReviewManagement {
+  list-style: none;
+  padding: 0;
+  margin: 0.5em;
+}
+
+.ReviewManagement li {
+  margin: 3em 0;
+}
+
+.reviewEditDelete {
+  width: fit-content;
+  margin: auto;
 }
 
 /******* Large Screen *******************/
@@ -411,7 +457,7 @@ td a {
     width: 60%;
   }
 
-  #login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword {
+  #login, #newClassification, #newInventory, #editInventory, #updateAccount, #updateAccountPassword, #createReview, #editReview, #deleteReview {
     width: 30%;
   }
 }

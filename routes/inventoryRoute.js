@@ -16,6 +16,8 @@ router.get("/newInventory", utilities.handleErrors(invController.buildNewInvento
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildEditInventory))
 router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteConfirmationInventory))
+router.get("/editReview/:review_id", utilities.handleErrors(invController.buildEditReview))
+router.get("/deleteReview/:review_id", utilities.handleErrors(invController.buildDeleteReview))
 
 // Process the classification data
 router.post(
@@ -43,6 +45,27 @@ router.post(
 router.post(
   "/delete",
   utilities.handleErrors(invController.deleteInventory)
+)
+
+router.post(
+  "/createReview",
+  // inventoryValidate.reviewRules(),
+  // inventoryValidate.checkReviewData,
+  utilities.handleErrors(invController.createReview)
+)
+
+router.post(
+  "/editReview",
+  // inventoryValidate.reviewRules(),
+  // inventoryValidate.checkReviewData,
+  utilities.handleErrors(invController.editReview)
+)
+
+router.post(
+  "/deleteReview",
+  // inventoryValidate.reviewRules(),
+  // inventoryValidate.checkReviewData,
+  utilities.handleErrors(invController.deleteReview)
 )
 
 module.exports = router;

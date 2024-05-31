@@ -40,20 +40,28 @@ invCont.buildByInvId = async function (req, res, next) {
   const grid = await utilities.buildDetailsGrid(data) // MAKE IN UTILITIES
   let nav = await utilities.getNav()
   let accountName
+  let accountLastName
+  let account_id
   if (req.cookies.jwt) {
     accountName = res.locals.accountData.account_firstname
+    accountLastName = res.locals.accountData.account_lastname
+    account_id = res.locals.accountData.account_id
   } else {
     accountName = ""
+    accountLastName = ""
+    account_id = ""
   }
   const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
   const invMake = data.inv_make
   const invModel = data.inv_model
   const invYear = data.inv_year
+  const reviews = await utilities.buildReviews(req.cookies.jwt, accountName, accountLastName, inv_id, account_id)
   res.render("./inventory/details", {
     title: invYear + " " + invMake + " " + invModel,
     nav,
     isLoggedIn,
-    grid, // is the comma necessary?
+    grid,
+    reviews, // is the comma necessary?
   })
 }
 }
@@ -387,6 +395,135 @@ invCont.deleteInventory = async function (req, res) {
     inv_model,
     inv_year,
     inv_price,
+    })
+  }
+}
+
+invCont.createReview = async function (req, res) {
+  const {review_text, inv_id, account_id} = req.body
+  console.log("IS THIS EVEN RUNNING?")
+
+  const result = await inventory_model.createReview(review_text, inv_id, account_id)
+
+  if (result) {
+    res.redirect(`detail/${inv_id}`)
+  } else {
+    res.redirect(`detail/${inv_id}`)
+  }
+}
+
+invCont.buildEditReview = async function (req, res) {
+  const review_id = req.params.review_id
+  let reviewData = await inventory_model.getReviewDataByReviewId(review_id)
+  const makeModel = reviewData.inv_make + ' ' + reviewData.inv_model
+  console.log(reviewData)
+  const review_text = reviewData.review_text
+  let nav = await utilities.getNav()
+  let accountName
+  if (req.cookies.jwt) {
+    accountName = res.locals.accountData.account_firstname
+  } else {
+    accountName = ""
+  }
+  const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+  res.render("inventory/edit-review", {
+    title: "Edit Review",
+    nav,
+    isLoggedIn,
+    errors: null,
+    makeModel,
+    review_text,
+    review_id,
+  })
+}
+
+invCont.editReview = async function (req, res) {
+  const {review_text, review_id} = req.body
+
+  const updateResult = await inventory_model.editReview(review_text, review_id)
+
+  if (updateResult) {
+    req.flash("notice", "Your Review was successfully changed!")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, your review was unable to be changed.")
+    const review_id = req.params.review_id
+    let reviewData = await inventory_model.getReviewDataByReviewId(review_id)
+    const makeModel = reviewData.inv_make + ' ' + reviewData.inv_model
+    let nav = await utilities.getNav()
+    let accountName
+    if (req.cookies.jwt) {
+      accountName = res.locals.accountData.account_firstname
+    } else {
+      accountName = ""
+    }
+    const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+    res.render("inventory/edit_review", {
+      title: "Edit Review",
+      nav,
+      isLoggedIn,
+      errors: null,
+      makeModel,
+      review_text,
+      review_id,
+    })
+  }
+}
+
+invCont.buildDeleteReview = async function (req, res) {
+  const review_id = req.params.review_id
+  let reviewData = await inventory_model.getReviewDataByReviewId(review_id)
+  const makeModel = reviewData.inv_make + ' ' + reviewData.inv_model
+  console.log(reviewData)
+  const review_text = reviewData.review_text
+  let nav = await utilities.getNav()
+  let accountName
+  if (req.cookies.jwt) {
+    accountName = res.locals.accountData.account_firstname
+  } else {
+    accountName = ""
+  }
+  const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+  res.render("inventory/delete-review", {
+    title: "Delete Review",
+    nav,
+    isLoggedIn,
+    errors: null,
+    makeModel,
+    review_text,
+    review_id,
+  })
+}
+
+invCont.deleteReview = async function (req, res) {
+  const {review_text, review_id} = req.body
+
+  const updateResult = await inventory_model.deleteReview(review_id)
+
+  if (updateResult) {
+    req.flash("notice", "Your Review was successfully deleted!")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, your review was unable to be deleted.")
+    const review_id = req.params.review_id
+    let reviewData = await inventory_model.getReviewDataByReviewId(review_id)
+    const makeModel = reviewData.inv_make + ' ' + reviewData.inv_model
+    let nav = await utilities.getNav()
+    let accountName
+    if (req.cookies.jwt) {
+      accountName = res.locals.accountData.account_firstname
+    } else {
+      accountName = ""
+    }
+    const isLoggedIn = await utilities.buildHeaderTools(req.cookies.jwt, accountName)
+    res.render("inventory/delete_review", {
+      title: "Edit Review",
+      nav,
+      isLoggedIn,
+      errors: null,
+      makeModel,
+      review_text,
+      review_id,
     })
   }
 }
